@@ -34,25 +34,7 @@ public class MainActivity extends AppCompatActivity {
         activityBtn = findViewById(R.id.btnActivity);
         fManager = getSupportFragmentManager();
 
-//        bodyBtn.setOnClickListener(new View.OnClickListener() {
-//           @Override
-//           public void onClick(View view) {
-//               getSupportFragmentManager().beginTransaction()
-//                       .replace(R.id.fragmentContainerView2, bodyFragment)
-//                       .addToBackStack(null)
-//                       .commit();
-//           }
-//        });
-//
-//        activityBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.fragmentContainerView2, activitiesFragment)
-//                        .addToBackStack(null)
-//                        .commit();
-//            }
-//        });
+
         bodyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -81,13 +63,6 @@ public class MainActivity extends AppCompatActivity {
                         .commit();
             }
         });
-//        bodyBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                FragmentManager fragmentManager = getSupportFragmentManager();
-//                fragmentManager.beginTransaction();
-//            }
-//        });
 
     }
 }
