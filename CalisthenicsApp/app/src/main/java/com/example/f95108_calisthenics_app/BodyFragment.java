@@ -1,12 +1,20 @@
 package com.example.f95108_calisthenics_app;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.textfield.TextInputEditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,34 +22,39 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class BodyFragment extends Fragment {
+    private static final String ARG_HEIGHT = "heightparam";
+    private static final String ARG_WEIGHT = "weightparam";
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private Activity activityContext;
+    private double heightValue;
+    private double weightValue;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private TextInputEditText height;
+    private TextInputEditText weight;
+    private TextView bmi;
 
     public BodyFragment() {
         // Required empty public constructor
     }
 
+    public BodyFragment(Activity mainActivity){
+        activityContext = mainActivity;
+    }
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param height Parameter 1.
+     * @param weight Parameter 2.
      * @return A new instance of fragment BodyFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BodyFragment newInstance(String param1, String param2) {
+    public static BodyFragment newInstance(int height,
+                                           int weight) {
         BodyFragment fragment = new BodyFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putDouble(ARG_HEIGHT, height);
+        args.putDouble(ARG_WEIGHT, weight);
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,8 +63,8 @@ public class BodyFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            heightValue = Double.valueOf(getArguments().getString(ARG_HEIGHT));
+            weightValue = Double.valueOf(getArguments().getString(ARG_WEIGHT));
         }
     }
 
@@ -59,6 +72,99 @@ public class BodyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_body, container, false);
+        View view = inflater.inflate(R.layout.fragment_body, container, false);
+        height = view.findViewById(R.id.height);
+        weight = view.findViewById(R.id.weight);
+        bmi = view.findViewById(R.id.bmivalue);
+
+        height.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                try{
+                    setHeight();
+                    if(weightValue!=0){
+                        bmi.setText(String.format("%,.2f", calculateBmi()) + "%");
+                    }
+                }
+                catch (Exception e){
+//                    Toast.makeText(activityContext, e.getMessage(), Toast.LENGTH_LONG).show();
+                    bmi.setText("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+            }
+        });
+
+        weight.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                try {
+                    setWeight();
+                    if(heightValue!=0){
+                        bmi.setText(String.format("%,.2f", calculateBmi()) + "%");
+                    }
+                }
+                catch (Exception e) {
+//                    Toast.makeText(activityContext, e.getMessage(), Toast.LENGTH_LONG).show();
+                    bmi.setText("");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
+        return view;
+    }
+
+//    private void checkValues() throws Exception{
+//        if (heightValue <=0 || heightValue >=600){ //|| height.length() == 0){
+//            throw new Exception("Invalid value for height.");
+//        }
+//        if (weightValue <= 0 || weightValue >= 600){ // || weight.length() == 0) {
+//            throw new Exception("Invalid value for weight.");
+//        }
+//    }
+
+    private void setHeight() throws  Exception{
+        if (height.length()==0){
+            heightValue = 0;
+            throw new Exception("Height must not be empty.");
+        }
+        double tmpValue = Double.valueOf(height.getText().toString());
+        if (tmpValue <=0 || tmpValue >=600){
+            throw new Exception("Invalid value for height.");
+        }
+        heightValue = tmpValue;
+    }
+
+    private void setWeight() throws  Exception{
+        if (weight.length()==0){
+            weightValue=0;
+            throw new Exception("Weight must not be empty.");
+        }
+        double tmpValue = Double.valueOf(weight.getText().toString());
+        if (tmpValue <=0 || tmpValue >=600){
+            throw new Exception("Invalid value for weight.");
+        }
+        weightValue = tmpValue;
+    }
+
+    private double calculateBmi() throws Exception{
+        return weightValue / ((heightValue / 100) * (heightValue / 100));
     }
 }

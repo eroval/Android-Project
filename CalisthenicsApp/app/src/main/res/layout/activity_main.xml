@@ -61,11 +61,12 @@
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainerView2"
-            android:name="com.example.f95108_calisthenics_app.BodyFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/divider2"
-            tools:layout="@layout/fragment_body" />
+            tools:layout="@layout/fragment_body"
+            />
+<!--             -->
     </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private Button activityBtn;
 
     // fragments
-    private Fragment bodyFragment = new BodyFragment();
+    private Fragment bodyFragment = new BodyFragment(this);
     private Fragment activitiesFragment = new ActivitiesFragment();
     private String bodyFragmentTag = "bodyFragmentTag";
     private String activitiesFragmentTag = "activitiesFragmentTag";
