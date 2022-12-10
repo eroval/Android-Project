@@ -1,5 +1,6 @@
 package com.example.f95108_calisthenics_app;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.provider.BaseColumns;
 
@@ -15,6 +16,7 @@ public final class DatabaseContract {
 
     private DatabaseContract(){}
 
+    // Table
     public static class UserTable implements BaseColumns {
         public static final String TABLE_NAME = "user";
         public static final String COLUMN_ID = "id";
@@ -30,6 +32,7 @@ public final class DatabaseContract {
                 ")";
 
         public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+
     }
 
     public static class ActivityTable implements BaseColumns {

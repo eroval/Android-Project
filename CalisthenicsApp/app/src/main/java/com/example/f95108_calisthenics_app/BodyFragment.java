@@ -11,6 +11,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,11 @@ public class BodyFragment extends Fragment {
     private TextInputEditText weight;
     private TextView bmi;
 
+    private Button btnSave;
+
+    private DatabaseHelper dbController;
+
+
     public BodyFragment() {
         // Required empty public constructor
     }
@@ -40,6 +46,7 @@ public class BodyFragment extends Fragment {
     public BodyFragment(Activity mainActivity){
         activityContext = mainActivity;
     }
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -76,6 +83,8 @@ public class BodyFragment extends Fragment {
         height = view.findViewById(R.id.height);
         weight = view.findViewById(R.id.weight);
         bmi = view.findViewById(R.id.bmivalue);
+        btnSave = view.findViewById(R.id.saveBtn);
+        dbController = new DatabaseHelper(activityContext);
 
         height.addTextChangedListener(new TextWatcher() {
             @Override
@@ -92,7 +101,7 @@ public class BodyFragment extends Fragment {
                     }
                 }
                 catch (Exception e){
-//                    Toast.makeText(activityContext, e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(activityContext, e.getMessage(), Toast.LENGTH_LONG).show();
                     bmi.setText("");
                 }
             }
@@ -117,14 +126,20 @@ public class BodyFragment extends Fragment {
                     }
                 }
                 catch (Exception e) {
-//                    Toast.makeText(activityContext, e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(activityContext, e.getMessage(), Toast.LENGTH_LONG).show();
                     bmi.setText("");
                 }
             }
 
             @Override
             public void afterTextChanged(Editable editable) {
+            }
+        });
 
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                tryUpdating();
             }
         });
 
@@ -139,6 +154,13 @@ public class BodyFragment extends Fragment {
 //            throw new Exception("Invalid value for weight.");
 //        }
 //    }
+
+    private void tryUpdating(){
+        if(dbController.InsertOrUpdateUserTable(heightValue, weightValue)){
+            Toast.makeText(activityContext, "Updated", Toast.LENGTH_SHORT).show();
+        }
+        else Toast.makeText(activityContext, "Update failed", Toast.LENGTH_SHORT).show();
+    }
 
     private void setHeight() throws  Exception{
         if (height.length()==0){
