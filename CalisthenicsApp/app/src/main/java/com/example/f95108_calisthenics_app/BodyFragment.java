@@ -7,7 +7,6 @@ import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -86,6 +85,8 @@ public class BodyFragment extends Fragment {
         btnSave = view.findViewById(R.id.saveBtn);
         dbController = new DatabaseHelper(activityContext);
 
+        loadSavedValues();
+
         height.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -101,7 +102,7 @@ public class BodyFragment extends Fragment {
                     }
                 }
                 catch (Exception e){
-                    Toast.makeText(activityContext, e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(activityContext, e.getMessage(), Toast.LENGTH_SHORT).show();
                     bmi.setText("");
                 }
             }
@@ -126,7 +127,7 @@ public class BodyFragment extends Fragment {
                     }
                 }
                 catch (Exception e) {
-                    Toast.makeText(activityContext, e.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(activityContext, e.getMessage(), Toast.LENGTH_SHORT).show();
                     bmi.setText("");
                 }
             }
@@ -155,8 +156,23 @@ public class BodyFragment extends Fragment {
 //        }
 //    }
 
+    private void loadSavedValues(){
+        UserModel user = dbController.getUser();
+        if (user!=null){
+            try {
+                height.setText(user.getHeight().toString());
+                weight.setText(user.getWeight().toString());
+                setHeight();
+                setWeight();
+                bmi.setText(String.format("%,.2f", calculateBmi()) + "%");
+            }
+            catch (Exception e){
+                Toast.makeText(activityContext, "Couldn't load user data", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
     private void tryUpdating(){
-        if(dbController.InsertOrUpdateUserTable(heightValue, weightValue)){
+        if(dbController.insertOrUpdateUserTable(heightValue, weightValue)){
             Toast.makeText(activityContext, "Updated", Toast.LENGTH_SHORT).show();
         }
         else Toast.makeText(activityContext, "Update failed", Toast.LENGTH_SHORT).show();

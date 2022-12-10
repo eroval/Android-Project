@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.BaseColumns;
 
 import androidx.annotation.Nullable;
 
@@ -44,7 +43,7 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
-    public boolean InsertOrUpdateUserTable(Double height, Double weight){
+    public boolean insertOrUpdateUserTable(Double height, Double weight){
         try {
             UserModel user = new UserModel(height, weight);
             ContentValues values = user.getContentValues();
@@ -58,4 +57,26 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public UserModel getUser(){
+        UserModel user = null;
+        Cursor c = this.getReadableDatabase().query(
+                DatabaseContract.UserTable.TABLE_NAME,
+                new String[]{
+                        DatabaseContract.UserTable.COLUMN_ID,
+                        DatabaseContract.UserTable.COLUMN_HEIGHT,
+                        DatabaseContract.UserTable.COLUMN_WEIGHT
+                },
+                DatabaseContract.UserTable.COLUMN_ID + "=?",
+                new String[]{String.valueOf(1)},
+                null, null, null, null);
+        if (c!=null){
+            c.moveToFirst();
+        }
+        try { user = new UserModel(c.getDouble(1),c.getDouble(2) );
+        } catch (Exception e) {
+            System.out.println("Couldn't fetch user");
+            e.printStackTrace();
+        }
+        return user;
+    }
 }
