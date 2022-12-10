@@ -147,15 +147,6 @@ public class BodyFragment extends Fragment {
         return view;
     }
 
-//    private void checkValues() throws Exception{
-//        if (heightValue <=0 || heightValue >=600){ //|| height.length() == 0){
-//            throw new Exception("Invalid value for height.");
-//        }
-//        if (weightValue <= 0 || weightValue >= 600){ // || weight.length() == 0) {
-//            throw new Exception("Invalid value for weight.");
-//        }
-//    }
-
     private void loadSavedValues(){
         UserModel user = dbController.getUser();
         if (user!=null){
