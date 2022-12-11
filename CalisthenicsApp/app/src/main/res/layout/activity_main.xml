@@ -33,40 +33,27 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
 
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-
         android:layout_marginTop="24dp"
+        android:layout_marginEnd="10dp"
+
+        android:layout_marginRight="10dp"
         android:background="#424242"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnBody" />
 
-<!--    <androidx.fragment.app.FragmentContainerView-->
-<!--        android:id="@+id/fragmentContainerView2"-->
-<!--        android:name="com.example.f95108_calisthenics_app.BodyFragment"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/divider2"-->
-<!--        tools:layout="@layout/fragment_body" />-->
 
-    <ScrollView
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/divider2"
-        >
-
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/fragmentContainerView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/divider2"
-            tools:layout="@layout/fragment_body"
-            />
-<!--             -->
-    </ScrollView>
+        tools:layout="@layout/fragment_activities" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
