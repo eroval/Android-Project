@@ -1,5 +1,8 @@
 package com.example.f95108_calisthenics_app;
 
+import android.app.Activity;
+import android.app.TaskStackBuilder;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -7,6 +10,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,8 +29,15 @@ public class ActivitiesFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private Activity mainActivity;
+    private FloatingActionButton addBtn;
+
     public ActivitiesFragment() {
         // Required empty public constructor
+    }
+
+    public ActivitiesFragment(Activity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     /**
@@ -59,6 +71,19 @@ public class ActivitiesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_activities, container, false);
+        View view = inflater.inflate(R.layout.fragment_activities, container, false);
+        addBtn = view.findViewById(R.id.addActivityBtn);
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mainActivity, ChooserActivity.class);
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(mainActivity);
+                stackBuilder.addNextIntentWithParentStack(intent);
+                stackBuilder.startActivities();
+            }
+        });
+
+        return view;
     }
 }
