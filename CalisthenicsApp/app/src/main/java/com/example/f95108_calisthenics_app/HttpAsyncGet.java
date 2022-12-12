@@ -2,6 +2,10 @@ package com.example.f95108_calisthenics_app;
 
 import android.os.AsyncTask;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +31,7 @@ public class HttpAsyncGet extends AsyncTask<String, Void, String> {
     @Override
     protected String doInBackground(String... params) {
         try {
+
             URL my_url = new URL(params[0]);
 
             HttpURLConnection connection = (HttpURLConnection) my_url.openConnection();
