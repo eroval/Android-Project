@@ -77,9 +77,9 @@ public class ActivitiesFragment extends Fragment {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mainActivity, ChooserActivity.class);
+                Intent secondaryIntent = new Intent(mainActivity, ChooserActivity.class);
                 TaskStackBuilder stackBuilder = TaskStackBuilder.create(mainActivity);
-                stackBuilder.addNextIntentWithParentStack(intent);
+                stackBuilder.addNextIntentWithParentStack(secondaryIntent);
                 stackBuilder.startActivities();
             }
         });
