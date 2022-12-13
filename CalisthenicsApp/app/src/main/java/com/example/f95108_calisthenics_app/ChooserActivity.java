@@ -2,12 +2,17 @@ package com.example.f95108_calisthenics_app;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.TaskStackBuilder;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -67,7 +72,12 @@ public class ChooserActivity extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             SearchedActivityModel currentActivity = activityAdapter.getItem(position);
-                            Toast.makeText(ChooserActivity.this, currentActivity.getName(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(ChooserActivity.this, EditActivities.class);
+                            intent.putExtra("name", currentActivity.getName());
+                            intent.putExtra("calories", Integer.valueOf(currentActivity.getCalories()/60).toString());
+                            TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(ChooserActivity.this);
+                            taskStackBuilder.addNextIntentWithParentStack(intent);
+                            taskStackBuilder.startActivities();
                         }
                     });
                     activitiesListView.setAdapter(activityAdapter);

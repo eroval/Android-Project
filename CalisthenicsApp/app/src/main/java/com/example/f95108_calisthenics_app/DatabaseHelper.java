@@ -5,8 +5,13 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.provider.ContactsContract;
 
 import androidx.annotation.Nullable;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Date;
 
 public final class DatabaseHelper extends SQLiteOpenHelper {
     private Context context;
@@ -57,6 +62,20 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    public boolean insertOrUpdateActivityTable(String date, Integer id, String activityName, Integer calories){
+        try {
+            ActivityModel activity = new ActivityModel(date, id, activityName, calories);
+            ContentValues values = activity.getContentValues();
+
+            this.getWritableDatabase().replace(DatabaseContract.ActivityTable.TABLE_NAME, null, values);
+            return true;
+        }
+        catch (Exception e){
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+
     public UserModel getUser(){
         UserModel user = null;
         Cursor c = this.getReadableDatabase().query(
@@ -78,5 +97,30 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             e.printStackTrace();
         }
         return user;
+    }
+
+    public String getDateInSuitableFormat(){
+        SimpleDateFormat curFormat = new SimpleDateFormat("yyyy/MM/dd");
+        return curFormat.format(new Date());
+    }
+
+    public Integer findActivityIdToInsert(String date){
+        Cursor c = this.getReadableDatabase().query(
+                DatabaseContract.ActivityTable.TABLE_NAME,
+                new String[]{
+                        DatabaseContract.ActivityTable.COLUMN_DATE,
+                        DatabaseContract.ActivityTable.COLUMN_ID,
+                        DatabaseContract.ActivityTable.COLUMN_NAME,
+                        DatabaseContract.ActivityTable.COLUMN_CALORIES
+                },
+                DatabaseContract.ActivityTable.COLUMN_DATE + "=?",
+                new String[]{date},
+                null, null, null, null);
+        if (c!=null){
+            c.moveToLast();
+            Integer id = c.getInt(1);
+            return id+1;
+        }
+        return 1;
     }
 }

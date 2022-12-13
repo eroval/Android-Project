@@ -38,15 +38,17 @@ public final class DatabaseContract {
     public static class ActivityTable implements BaseColumns {
         public static final String TABLE_NAME = "activities";
         public static final String COLUMN_DATE = "date";
-        public static final String COLUMN_ACTIVITY = "activity";
+        public static final String COLUMN_ID = "id";
+        public static final String COLUMN_NAME = "name";
         public static final String COLUMN_CALORIES = "calories";
 
         public static  final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
                 " (" +
                 COLUMN_DATE + TEXT +
-                COLUMN_ACTIVITY + TEXT +
+                COLUMN_ID + INTEGER +
+                COLUMN_NAME + TEXT +
                 COLUMN_CALORIES + INTEGER +
-                "PRIMARY KEY (" + COLUMN_DATE + "," + COLUMN_ACTIVITY + ")"
+                "PRIMARY KEY (" + COLUMN_DATE + "," + COLUMN_ID + ")"
                 + ")";
 
         public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
