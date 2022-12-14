@@ -73,6 +73,7 @@ public class ChooserActivity extends AppCompatActivity {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                             SearchedActivityModel currentActivity = activityAdapter.getItem(position);
                             Intent intent = new Intent(ChooserActivity.this, EditActivities.class);
+                            intent.putExtra("id", "1");
                             intent.putExtra("name", currentActivity.getName());
                             intent.putExtra("calories", Integer.valueOf(currentActivity.getCalories()/60).toString());
                             TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(ChooserActivity.this);

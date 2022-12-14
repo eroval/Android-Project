@@ -11,7 +11,10 @@ import androidx.annotation.Nullable;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public final class DatabaseHelper extends SQLiteOpenHelper {
     private Context context;
@@ -62,9 +65,9 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    public boolean insertOrUpdateActivityTable(String date, Integer id, String activityName, Integer calories){
+    public boolean insertOrUpdateActivityTable(String date, Integer id, String activityName, Integer duration, Integer calories){
         try {
-            ActivityModel activity = new ActivityModel(date, id, activityName, calories);
+            ActivityModel activity = new ActivityModel(date, id, activityName, duration, calories);
             ContentValues values = activity.getContentValues();
 
             this.getWritableDatabase().replace(DatabaseContract.ActivityTable.TABLE_NAME, null, values);
@@ -96,12 +99,12 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             System.out.println("Couldn't fetch user");
             e.printStackTrace();
         }
+        c.close();
         return user;
     }
-
-    public String getDateInSuitableFormat(){
+    public String getDateInSuitableFormat(Date date){
         SimpleDateFormat curFormat = new SimpleDateFormat("yyyy/MM/dd");
-        return curFormat.format(new Date());
+        return curFormat.format(date);
     }
 
     public Integer findActivityIdToInsert(String date){
@@ -111,16 +114,71 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
                         DatabaseContract.ActivityTable.COLUMN_DATE,
                         DatabaseContract.ActivityTable.COLUMN_ID,
                         DatabaseContract.ActivityTable.COLUMN_NAME,
+                        DatabaseContract.ActivityTable.COLUMN_DURATION,
                         DatabaseContract.ActivityTable.COLUMN_CALORIES
                 },
                 DatabaseContract.ActivityTable.COLUMN_DATE + "=?",
                 new String[]{date},
                 null, null, null, null);
-        if (c!=null){
+        if (c!=null && c.getCount()>0){
             c.moveToLast();
             Integer id = c.getInt(1);
             return id+1;
         }
+        c.close();
         return 1;
     }
+
+
+    public ArrayList<ActivityModel> getActivities(String date) throws Exception {
+        ArrayList<ActivityModel> activitiesList = new ArrayList<>();
+//        Cursor c = this.getReadableDatabase().query(
+//                DatabaseContract.ActivityTable.TABLE_NAME,
+//                new String[]{
+//                        DatabaseContract.ActivityTable.COLUMN_DATE,
+//                        DatabaseContract.ActivityTable.COLUMN_ID,
+//                        DatabaseContract.ActivityTable.COLUMN_NAME,
+//                        DatabaseContract.ActivityTable.COLUMN_DURATION,
+//                        DatabaseContract.ActivityTable.COLUMN_CALORIES
+//                },
+//                DatabaseContract.ActivityTable.COLUMN_DATE + "=?",
+//                new String[]{date},
+//                null, null, null, null);
+        Cursor c = this.getReadableDatabase().rawQuery("SELECT * FROM " + DatabaseContract.ActivityTable.TABLE_NAME, null);
+        if (c.moveToFirst()){
+            do {
+                ActivityModel currentActivity = new ActivityModel(
+                        c.getString(0),
+                        c.getInt(1),
+                        c.getString(2),
+                        c.getInt(3),
+                        c.getInt(4));
+                activitiesList.add(currentActivity);
+            } while(c.moveToNext());
+        }
+        c.close();
+//        if (c != null && c.getCount() > 0) {
+//            c.moveToFirst();
+//            do {
+//
+//            }
+//            while (c.moveToNext()) {
+//                try {
+//                    ActivityModel currentActivity = new ActivityModel(
+//                            c.getString(0),
+//                            c.getInt(1),
+//                            c.getString(2),
+//                            c.getInt(3),
+//                            c.getInt(4)
+//                    );
+//                    activitiesList.add(currentActivity);
+//                } catch (Exception e) {
+//                    System.out.println("Couldn't fetch activity");
+//                    e.printStackTrace();
+//                }
+//            }
+//        }
+        return activitiesList;
+    }
+
 }

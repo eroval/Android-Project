@@ -9,9 +9,8 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class SearchedActivityAdapter extends ArrayAdapter<SearchedActivityModel> {
-
-    public SearchedActivityAdapter(Context context, List<SearchedActivityModel> activitiesList) {
+public class ActivityModelAdapter extends ArrayAdapter<ActivityModel> {
+    public ActivityModelAdapter(Context context, List<ActivityModel> activitiesList) {
         super(context, 0, activitiesList);
     }
 
@@ -20,13 +19,15 @@ public class SearchedActivityAdapter extends ArrayAdapter<SearchedActivityModel>
         View listItemView = convertView;
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.searched_activities_list_item, parent, false);
+                    R.layout.activity_list_item, parent, false);
         }
 
-        SearchedActivityModel currentActivity = getItem(position);
+        ActivityModel currentActivity = getItem(position);
 
+        TextView date = listItemView.findViewById(R.id.date);
+        date.setText(currentActivity.getDate());
         TextView name = listItemView.findViewById(R.id.name);
-        name.setText(currentActivity.getName());
+        name.setText(currentActivity.getActivityName());
         TextView calories = listItemView.findViewById(R.id.calories);
         calories.setText(currentActivity.getCalories().toString());
 
