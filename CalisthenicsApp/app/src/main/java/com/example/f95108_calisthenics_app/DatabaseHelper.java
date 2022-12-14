@@ -132,18 +132,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 
     public ArrayList<ActivityModel> getActivities(String date) throws Exception {
         ArrayList<ActivityModel> activitiesList = new ArrayList<>();
-//        Cursor c = this.getReadableDatabase().query(
-//                DatabaseContract.ActivityTable.TABLE_NAME,
-//                new String[]{
-//                        DatabaseContract.ActivityTable.COLUMN_DATE,
-//                        DatabaseContract.ActivityTable.COLUMN_ID,
-//                        DatabaseContract.ActivityTable.COLUMN_NAME,
-//                        DatabaseContract.ActivityTable.COLUMN_DURATION,
-//                        DatabaseContract.ActivityTable.COLUMN_CALORIES
-//                },
-//                DatabaseContract.ActivityTable.COLUMN_DATE + "=?",
-//                new String[]{date},
-//                null, null, null, null);
         Cursor c = this.getReadableDatabase().rawQuery("SELECT * FROM " + DatabaseContract.ActivityTable.TABLE_NAME, null);
         if (c.moveToFirst()){
             do {
@@ -157,27 +145,6 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
             } while(c.moveToNext());
         }
         c.close();
-//        if (c != null && c.getCount() > 0) {
-//            c.moveToFirst();
-//            do {
-//
-//            }
-//            while (c.moveToNext()) {
-//                try {
-//                    ActivityModel currentActivity = new ActivityModel(
-//                            c.getString(0),
-//                            c.getInt(1),
-//                            c.getString(2),
-//                            c.getInt(3),
-//                            c.getInt(4)
-//                    );
-//                    activitiesList.add(currentActivity);
-//                } catch (Exception e) {
-//                    System.out.println("Couldn't fetch activity");
-//                    e.printStackTrace();
-//                }
-//            }
-//        }
         return activitiesList;
     }
 

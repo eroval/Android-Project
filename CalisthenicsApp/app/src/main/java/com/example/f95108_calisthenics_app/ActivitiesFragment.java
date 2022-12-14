@@ -87,41 +87,35 @@ public class ActivitiesFragment extends Fragment {
         addBtn = view.findViewById(R.id.addActivityBtn);
         activitiesListView = view.findViewById(R.id.activitiesFragmentList);
         dbController = new DatabaseHelper(activityContext);
-//
-//        ExecutorService executorService = Executors.newSingleThreadExecutor();
-//        executorService.execute(new Runnable() {
-//            @Override
-//            public void run() {
-                try {
-                    String date = dbController.getDateInSuitableFormat(new Date());
-                    ArrayList<ActivityModel> activities = dbController.getActivities(date);
-                    if (activities != null) {
-                        ActivityModelAdapter activityAdapter = new ActivityModelAdapter(activityContext, activities);
-                        activitiesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                ActivityModel currentActivity = activityAdapter.getItem(position);
-                                Intent intent = new Intent(activityContext, EditActivities.class);
-                                intent.putExtra("id", "2");
-                                intent.putExtra("date", currentActivity.getDate());
-                                intent.putExtra("activity_id", currentActivity.getId().toString());
-                                intent.putExtra("name", currentActivity.getActivityName());
-                                intent.putExtra("calories", Integer.valueOf(currentActivity.getCalories() / currentActivity.getDuration()).toString());
-                                TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(activityContext);
-                                Intent parentActivity = new Intent(activityContext, MainActivity.class);
-                                taskStackBuilder.addNextIntent(parentActivity);
-                                taskStackBuilder.addNextIntent(intent);
-                                taskStackBuilder.startActivities();
-                            }
-                        });
-                        activitiesListView.setAdapter(activityAdapter);
+
+        try {
+            String date = dbController.getDateInSuitableFormat(new Date());
+            ArrayList<ActivityModel> activities = dbController.getActivities(date);
+            if (activities != null) {
+                ActivityModelAdapter activityAdapter = new ActivityModelAdapter(activityContext, activities);
+                activitiesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        ActivityModel currentActivity = activityAdapter.getItem(position);
+                        Intent intent = new Intent(activityContext, EditActivities.class);
+                        intent.putExtra("id", "2");
+                        intent.putExtra("date", currentActivity.getDate());
+                        intent.putExtra("activity_id", currentActivity.getId().toString());
+                        intent.putExtra("name", currentActivity.getActivityName());
+                        intent.putExtra("calories", Integer.valueOf(currentActivity.getCalories() / currentActivity.getDuration()).toString());
+                        TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(activityContext);
+                        Intent parentActivity = new Intent(activityContext, MainActivity.class);
+                        taskStackBuilder.addNextIntent(parentActivity);
+                        taskStackBuilder.addNextIntent(intent);
+                        taskStackBuilder.startActivities();
                     }
-                }
-                catch(Exception e){
-                    System.out.println(e.getMessage());
-                }
-//            }
-//        });
+                });
+                activitiesListView.setAdapter(activityAdapter);
+            }
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
 
 
         addBtn.setOnClickListener(new View.OnClickListener() {

@@ -54,5 +54,6 @@ public final class DatabaseContract {
                 + ")";
 
         public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+
     }
 }

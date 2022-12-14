@@ -18,7 +18,7 @@
         android:layout_marginBottom="50dp"
         android:ems="10"
         android:hint="Enter minutes for activity"
-        android:inputType="textPersonName"
+        android:inputType="number|numberDecimal"
         android:text=""
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -50,25 +50,4 @@
         app:layout_constraintEnd_toStartOf="@+id/acceptBtn"
         app:layout_constraintTop_toBottomOf="@+id/editActivityMinutes" />
 
-    <TextView
-        android:id="@+id/activityName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="85dp"
-        android:layout_marginLeft="85dp"
-        android:layout_marginTop="97dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/activityCalories"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="87dp"
-        android:layout_marginLeft="87dp"
-        android:layout_marginTop="35dp"
-        android:text="TextView"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/activityName" />
 </androidx.constraintlayout.widget.ConstraintLayout>

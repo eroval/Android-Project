@@ -41,7 +41,6 @@ public class ChooserActivity extends AppCompatActivity {
     private Button searchBtn;
     private TextView activityText;
     private ListView activitiesListView;
-//    private TextView requestText;
 
 
     public ChooserActivity() throws MalformedURLException {
@@ -55,8 +54,6 @@ public class ChooserActivity extends AppCompatActivity {
         searchBtn = findViewById(R.id.searchBtn);
         activityText = findViewById(R.id.activityText);
         activitiesListView = findViewById(R.id.activitiesList);
-
-//        requestText = findViewById(R.id.requestText);
 
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
@@ -82,9 +79,6 @@ public class ChooserActivity extends AppCompatActivity {
                         }
                     });
                     activitiesListView.setAdapter(activityAdapter);
-                }
-                else{
-//                requestText.setText("Problem with Json Object");
                 }
             }
         });
@@ -114,7 +108,6 @@ public class ChooserActivity extends AppCompatActivity {
         try {
             JSONObject responseJson = responseToJsonObject(response);
             return responseJson;
-            //return responseJson.toString();
         }
         catch (JSONException  e){
             e.printStackTrace();

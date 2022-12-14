@@ -21,7 +21,6 @@ public class EditActivities extends AppCompatActivity {
     private Integer calories;
     private Integer duration;
     private TextView minutes;
-    private TextView txt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +31,7 @@ public class EditActivities extends AppCompatActivity {
         btnDecline = findViewById(R.id.declineBtn);
         dbController = new DatabaseHelper(this);
 
-        TextView error = findViewById(R.id.activityName);
         minutes = findViewById(R.id.editActivityMinutes);
-        txt = findViewById(R.id.activityName);
 
         btnDecline.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,7 +55,6 @@ public class EditActivities extends AppCompatActivity {
                                 dbController.insertOrUpdateActivityTable(date, id, activityName, duration, calories);
                                 finish();
                             } catch (Exception e) {
-                                error.setText(e.getMessage());
                                 e.printStackTrace();
                             }
 
@@ -82,7 +78,6 @@ public class EditActivities extends AppCompatActivity {
                                 dbController.insertOrUpdateActivityTable(date, id, activityName, duration, calories);
                                 finish();
                             } catch (Exception e) {
-                                error.setText(e.getMessage());
                                 e.printStackTrace();
                             }
                         }
