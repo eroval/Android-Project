@@ -18,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
     private Button activityBtn;
 
     // fragments
-    private Fragment bodyFragment = new BodyFragment(this);
-    private Fragment activitiesFragment = new ActivitiesFragment(this);
+    private Fragment bodyFragment = new BodyFragment(this);;
+    private Fragment activitiesFragment = new ActivitiesFragment(this);;
     private String bodyFragmentTag = "bodyFragmentTag";
     private String activitiesFragmentTag = "activitiesFragmentTag";
 
@@ -34,17 +34,11 @@ public class MainActivity extends AppCompatActivity {
         activityBtn = findViewById(R.id.btnActivity);
         fManager = getSupportFragmentManager();
 
+
         bodyBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = fManager.findFragmentByTag(bodyFragmentTag);
-                if (fragment!=null) fManager.popBackStack
-                        (bodyFragmentTag, fManager.POP_BACK_STACK_INCLUSIVE);
-                fManager.beginTransaction()
-                        .replace(R.id.fragmentContainerView2, bodyFragment, bodyFragmentTag)
-                        .setReorderingAllowed(true)
-                        .addToBackStack(bodyFragmentTag)
-                        .commit();
+                setFragment("body");
             }
         });
 
@@ -52,16 +46,32 @@ public class MainActivity extends AppCompatActivity {
         activityBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Fragment fragment = fManager.findFragmentByTag(activitiesFragmentTag);
-                if (fragment!=null) fManager.popBackStack
-                        (activitiesFragmentTag, fManager.POP_BACK_STACK_INCLUSIVE);
-                fManager.beginTransaction()
-                        .replace(R.id.fragmentContainerView2, activitiesFragment, activitiesFragmentTag)
-                        .setReorderingAllowed(true)
-                        .addToBackStack(activitiesFragmentTag)
-                        .commit();
+                setFragment("activities");
             }
         });
+    }
 
+
+    public void setFragment(String fragmentName){
+        if (fragmentName=="body"){
+            Fragment fragment = fManager.findFragmentByTag(bodyFragmentTag);
+            if (fragment!=null) fManager.popBackStack
+                    (bodyFragmentTag, fManager.POP_BACK_STACK_INCLUSIVE);
+            fManager.beginTransaction()
+                    .replace(R.id.fragmentContainerView2, bodyFragment, bodyFragmentTag)
+                    .setReorderingAllowed(true)
+                    .addToBackStack(bodyFragmentTag)
+                    .commit();
+        }
+        else if(fragmentName=="activities"){
+            Fragment fragment = fManager.findFragmentByTag(activitiesFragmentTag);
+            if (fragment!=null) fManager.popBackStack
+                    (activitiesFragmentTag, fManager.POP_BACK_STACK_INCLUSIVE);
+            fManager.beginTransaction()
+                    .replace(R.id.fragmentContainerView2, activitiesFragment, activitiesFragmentTag)
+                    .setReorderingAllowed(true)
+                    .addToBackStack(activitiesFragmentTag)
+                    .commit();
+        }
     }
 }

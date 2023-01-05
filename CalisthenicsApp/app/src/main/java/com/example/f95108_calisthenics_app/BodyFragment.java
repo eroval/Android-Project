@@ -164,9 +164,9 @@ public class BodyFragment extends Fragment {
     }
     private void tryUpdating(){
         if(dbController.insertOrUpdateUserTable(heightValue, weightValue)){
-            Toast.makeText(activityContext, "Updated", Toast.LENGTH_SHORT).show();
+            Toast.makeText(activityContext, "Saved", Toast.LENGTH_SHORT).show();
         }
-        else Toast.makeText(activityContext, "Update failed", Toast.LENGTH_SHORT).show();
+        else Toast.makeText(activityContext, "Save failed", Toast.LENGTH_SHORT).show();
     }
 
     private void setHeight() throws  Exception{

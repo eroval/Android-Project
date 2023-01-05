@@ -10,8 +10,18 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,15 +39,17 @@ public class ActivitiesFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private Activity mainActivity;
+    private Activity activityContext;
     private FloatingActionButton addBtn;
+    private DatabaseHelper dbController;
+    private ListView activitiesListView;
 
     public ActivitiesFragment() {
         // Required empty public constructor
     }
 
     public ActivitiesFragment(Activity mainActivity) {
-        this.mainActivity = mainActivity;
+        this.activityContext = mainActivity;
     }
 
     /**
@@ -73,13 +85,45 @@ public class ActivitiesFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_activities, container, false);
         addBtn = view.findViewById(R.id.addActivityBtn);
+        activitiesListView = view.findViewById(R.id.activitiesFragmentList);
+        dbController = new DatabaseHelper(activityContext);
+
+        try {
+            String date = dbController.getDateInSuitableFormat(new Date());
+            ArrayList<ActivityModel> activities = dbController.getActivities(date);
+            if (activities != null) {
+                ActivityModelAdapter activityAdapter = new ActivityModelAdapter(activityContext, activities);
+                activitiesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        ActivityModel currentActivity = activityAdapter.getItem(position);
+                        Intent intent = new Intent(activityContext, EditActivities.class);
+                        intent.putExtra("id", "2");
+                        intent.putExtra("date", currentActivity.getDate());
+                        intent.putExtra("activity_id", currentActivity.getId().toString());
+                        intent.putExtra("name", currentActivity.getActivityName());
+                        intent.putExtra("calories", Integer.valueOf(currentActivity.getCalories() / currentActivity.getDuration()).toString());
+                        TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(activityContext);
+                        Intent parentActivity = new Intent(activityContext, MainActivity.class);
+                        taskStackBuilder.addNextIntent(parentActivity);
+                        taskStackBuilder.addNextIntent(intent);
+                        taskStackBuilder.startActivities();
+                    }
+                });
+                activitiesListView.setAdapter(activityAdapter);
+            }
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+
 
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mainActivity, ChooserActivity.class);
-                TaskStackBuilder stackBuilder = TaskStackBuilder.create(mainActivity);
-                stackBuilder.addNextIntentWithParentStack(intent);
+                Intent secondaryIntent = new Intent(activityContext, ChooserActivity.class);
+                TaskStackBuilder stackBuilder = TaskStackBuilder.create(activityContext);
+                stackBuilder.addNextIntentWithParentStack(secondaryIntent);
                 stackBuilder.startActivities();
             }
         });
