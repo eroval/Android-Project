@@ -23,7 +23,10 @@
         <activity
             android:name=".EditActivities"
             android:exported="false"
-            android:parentActivityName=".ChooserActivity">
+            android:parentActivityName=".ChooserActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
+            >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -31,14 +34,20 @@
         <activity
             android:name=".ChooserActivity"
             android:exported="false"
-            android:parentActivityName=".MainActivity">
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
+            >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

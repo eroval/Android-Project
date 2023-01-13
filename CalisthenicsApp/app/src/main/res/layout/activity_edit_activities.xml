@@ -33,8 +33,8 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="92dp"
         android:layout_marginRight="92dp"
-        android:text="Accept"
-        android:textSize="14sp"
+        android:text="@string/btnAccept"
+        android:textSize="@dimen/customSize"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editActivityMinutes" />
 
@@ -45,8 +45,8 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
-        android:text="Decline"
-        android:textSize="14sp"
+        android:text="@string/btnDecline"
+        android:textSize="@dimen/customSize"
         app:layout_constraintEnd_toStartOf="@+id/acceptBtn"
         app:layout_constraintTop_toBottomOf="@+id/editActivityMinutes" />
 
