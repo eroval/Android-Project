@@ -56,4 +56,19 @@ public final class DatabaseContract {
         public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
 
     }
+
+
+    public static class OperationsTable implements BaseColumns {
+        public static final String TABLE_NAME = "operations_table";
+        public static final String COLUMN_DATE = "date";
+
+        public static  final String CREATE_TABLE = "CREATE TABLE " + TABLE_NAME +
+                " (" +
+                COLUMN_DATE + TEXT +
+                "PRIMARY KEY (" + COLUMN_DATE + ")"
+                + ")";
+
+        public static final String DROP_TABLE = "DROP TABLE IF EXISTS " + TABLE_NAME;
+    }
+
 }

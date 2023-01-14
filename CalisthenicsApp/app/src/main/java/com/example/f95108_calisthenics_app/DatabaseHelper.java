@@ -30,12 +30,14 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         sqLiteDatabase.execSQL(DatabaseContract.UserTable.CREATE_TABLE);
         sqLiteDatabase.execSQL(DatabaseContract.ActivityTable.CREATE_TABLE);
+        sqLiteDatabase.execSQL(DatabaseContract.OperationsTable.CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int old_v, int new_v) {
         sqLiteDatabase.execSQL(DatabaseContract.UserTable.DROP_TABLE);
         sqLiteDatabase.execSQL(DatabaseContract.ActivityTable.DROP_TABLE);
+        sqLiteDatabase.execSQL(DatabaseContract.OperationsTable.DROP_TABLE);
         onCreate(sqLiteDatabase);
     }
 

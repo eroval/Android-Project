@@ -2,4 +2,14 @@
     <string name="app_name">F95108_Calisthenics_App</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="btnBody">Body</string>
+    <string name="btnActivities">Activities</string>
+    <string name="btnSave">Save</string>
+    <string name="btnSearch">Search</string>
+    <string name="btnAccept">Accept</string>
+    <string name="btnDecline">Decline</string>
+    <string name="hintActivity">skiing</string>
+    <string name="hintWeight">Weight (kg):</string>
+    <string name="hintHeight">Height (cm):</string>
+    <string name="BMI">BMI:</string>
 </resources>
